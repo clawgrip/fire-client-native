@@ -18,11 +18,10 @@ import javax.security.auth.callback.TextOutputCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.swing.JOptionPane;
 
+import es.gob.afirma.core.signers.AOPkcs1Signer;
 import es.gob.afirma.core.signers.AOSigner;
 import es.gob.afirma.core.ui.AOUIFactory;
-import es.gob.afirma.signers.pades.AOPDFSigner;
 import es.gob.clavefirma.client.jse.FireProvider;
-import es.gob.fire.client.Utils;
 
 /** Pruebas del proveedor.
  * @author Tom&aacute;s Garc&iacute;a-Mer&aacute;s. */
@@ -123,15 +122,17 @@ public final class TestProviderSign {
 
 		final KeyStore ks = testKeyStore(p);
 
-		final AOSigner pdfSigner = new AOPDFSigner();
+		final AOSigner p1Signer = new AOPkcs1Signer();
 		final String alias = ks.aliases().nextElement();
 		final PrivateKeyEntry pke = (PrivateKeyEntry) ks.getEntry(alias, null);
 
-		final byte[] data = Utils.getDataFromInputStream(
-			TestProviderSign.class.getResourceAsStream("/TEST_PDF.pdf") //$NON-NLS-1$
-		);
+		final byte[] data = "1234567812345678123456781234567812345678123456781234567812345678".getBytes(); //$NON-NLS-1$
 
-		final byte[] pdf = pdfSigner.sign(
+//		final byte[] data = Utils.getDataFromInputStream(
+//			TestProviderSign.class.getResourceAsStream("/TEST_PDF.pdf") //$NON-NLS-1$
+//		);
+
+		final byte[] pdf = p1Signer.sign(
 			data,
 			"NONEwithECDSA", //$NON-NLS-1$
 			pke.getPrivateKey(),
@@ -146,7 +147,7 @@ public final class TestProviderSign {
 			fos.close();
 		}
 
-		System.out.println("PDF Firmado correctamente"); //$NON-NLS-1$
+		System.out.println("Datos firmados correctamente"); //$NON-NLS-1$
 
 	}
 

@@ -26,9 +26,6 @@ public final class FireProvider extends Provider {
     private static final String SHA256WITH_ECDSA = "SHA256withECDSA"; //$NON-NLS-1$
     private static final String SHA384WITH_ECDSA = "SHA384withECDSA"; //$NON-NLS-1$
     private static final String SHA512WITH_ECDSA = "SHA512withECDSA"; //$NON-NLS-1$
-    private static final String NONEWITH_ECDSA   = "NONEwithECDSA"; //$NON-NLS-1$
-
-
 
     /** Nombre del almac&eacute;n de claves. */
     public static final String KEYSTORE_NAME = "FIRE"; //$NON-NLS-1$
@@ -36,6 +33,10 @@ public final class FireProvider extends Provider {
 	/** Construye el proveedor JSE (<code>KeyStore</code> y <code>Signature</code>) para ClaveFirma. */
 	public FireProvider() {
 		super(NAME, VERSION, INFO);
+
+		// MessageDigest
+		put("MessageDigest.NONE",       "es.gob.clavefirma.client.jse.NoneMessageDigestImpl"); //$NON-NLS-1$ //$NON-NLS-2$
+		put("MessageDigest.MD5andSHA1", "es.gob.clavefirma.client.jse.MD5andSHA1MessageDigestImpl"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // KeyStore
         put("KeyStore.FIRE", "es.gob.clavefirma.client.jse.FireKeyStoreImpl"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -51,9 +52,6 @@ public final class FireProvider extends Provider {
         put("Signature.SHA512withECDSA",   "es.gob.clavefirma.client.jse.FireSignatureImpl$Sha512Ecdsa"); //$NON-NLS-1$ //$NON-NLS-2$
         put("Signature.NONEwithECDSA",     "es.gob.clavefirma.client.jse.FireSignatureImpl$NoneEcdsa"); //$NON-NLS-1$ //$NON-NLS-2$
 
-
-
-
         // Claves soportadas
         put("Signature.SHA1withRSA SupportedKeyClasses",       FIRE_PRIVATE_KEY); //$NON-NLS-1$
         put("Signature.SHA256withRSA SupportedKeyClasses",     FIRE_PRIVATE_KEY); //$NON-NLS-1$
@@ -64,8 +62,6 @@ public final class FireProvider extends Provider {
         put("Signature.SHA384withECDSA SupportedKeyClasses",   FIRE_PRIVATE_KEY); //$NON-NLS-1$
         put("Signature.SHA512withECDSA SupportedKeyClasses",   FIRE_PRIVATE_KEY); //$NON-NLS-1$
         put("Signature.NONEwithECDSA SupportedKeyClasses",     FIRE_PRIVATE_KEY); //$NON-NLS-1$
-
-
 
         // Alias de los nombres de algoritmos de firma
         put("Alg.Alias.Signature.1.2.840.113549.1.1.5",       SHA1WITH_RSA); //$NON-NLS-1$
@@ -111,7 +107,6 @@ public final class FireProvider extends Provider {
         put("Alg.Alias.Signature.SHA-512withECDSA",           SHA512WITH_ECDSA); //$NON-NLS-1$
         put("Alg.Alias.Signature.SHA-512withECDSAEncryption", SHA512WITH_ECDSA); //$NON-NLS-1$
         put("Alg.Alias.Signature.SHA512withECDSAEncryption",  SHA512WITH_ECDSA); //$NON-NLS-1$
-
 
 	}
 

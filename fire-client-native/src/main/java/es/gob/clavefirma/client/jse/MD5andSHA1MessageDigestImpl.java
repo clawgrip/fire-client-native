@@ -47,7 +47,6 @@ public final class MD5andSHA1MessageDigestImpl extends MessageDigestSpi {
 	@Override
 	protected void engineUpdate(final byte b) {
 		BUFFER.write(b);
-
 	}
 
 	@Override

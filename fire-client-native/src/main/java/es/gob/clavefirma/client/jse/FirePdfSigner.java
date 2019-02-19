@@ -99,7 +99,7 @@ public final class FirePdfSigner implements AOSigner {
 		}
 
 		final PasswordCallback pwc = new PasswordCallback(
-			FireProviderMessages.getString("FirePdfSigner.0"), //$NON-NLS-1$
+			FireProviderMessages.getString("FireSignatureImpl.0"), //$NON-NLS-1$
 			false
 		);
 
