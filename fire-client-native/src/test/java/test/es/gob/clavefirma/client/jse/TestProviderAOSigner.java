@@ -20,8 +20,8 @@ import javax.swing.JOptionPane;
 
 import es.gob.afirma.core.signers.AOSigner;
 import es.gob.afirma.core.ui.AOUIFactory;
-import es.gob.clavefirma.client.jse.ClaveFirmaPdfSigner;
-import es.gob.clavefirma.client.jse.ClaveFirmaProvider;
+import es.gob.clavefirma.client.jse.FirePdfSigner;
+import es.gob.clavefirma.client.jse.FireProvider;
 import es.gob.fire.client.Utils;
 
 /** Pruebas del proveedor.
@@ -94,10 +94,10 @@ public final class TestProviderAOSigner {
 	 * @param p Proveedor de ClaveFirma.
 	 * @return <code>KeyStore</code> cargado.
 	 * @throws Exception En cualquier error. */
-	public static KeyStore testKeyStore(final ClaveFirmaProvider p) throws Exception {
+	public static KeyStore testKeyStore(final FireProvider p) throws Exception {
 
 		final KeyStore.Builder builder = KeyStore.Builder.newInstance(
-			ClaveFirmaProvider.KEYSTORE_NAME,
+			FireProvider.KEYSTORE_NAME,
 			p,
 			CHP
 		);
@@ -109,7 +109,7 @@ public final class TestProviderAOSigner {
 	 * @throws Exception En cualquier error. */
 	public static void main(final String[] args) throws Exception {
 
-		final ClaveFirmaProvider p = new ClaveFirmaProvider();
+		final FireProvider p = new FireProvider();
 
 		final String retrieveServer = "http://demo.tgm/afirma-signature-retriever/RetrieveService"; //$NON-NLS-1$
 		final String storageServer = "http://demo.tgm/afirma-signature-storage/StorageService"; //$NON-NLS-1$
@@ -122,7 +122,7 @@ public final class TestProviderAOSigner {
 
 		final KeyStore ks = testKeyStore(p);
 
-		final AOSigner pdfSigner = new ClaveFirmaPdfSigner();
+		final AOSigner pdfSigner = new FirePdfSigner();
 		final String alias = ks.aliases().nextElement();
 		final PrivateKeyEntry pke = (PrivateKeyEntry) ks.getEntry(alias, null);
 

@@ -33,7 +33,7 @@ import es.gob.clavefirma.client.certificatelist.HttpCertificateList;
 
 /** Implementaci&oacute;n de almac&eacute;n de claves basado en ClaveFirma.
  * @author Tom&aacute;s Garc&iacute;a-Mer&aacute;s. */
-public final class ClaveFirmaKeyStoreImpl extends KeyStoreSpi {
+public final class FireKeyStoreImpl extends KeyStoreSpi {
 
 	private Dictionary<String, X509Certificate> certsByAlias = null;
 
@@ -48,8 +48,8 @@ public final class ClaveFirmaKeyStoreImpl extends KeyStoreSpi {
 		if (!engineContainsAlias(alias)) {
 			return null;
 		}
-		return new ClaveFirmaPrivateKey(
-			ClaveFirmaProvider.getAppId(),
+		return new FirePrivateKey(
+			FireProvider.getAppId(),
 			this.subjectId,
 			(X509Certificate) engineGetCertificate(alias),
 			this.callbackHandler
@@ -177,13 +177,13 @@ public final class ClaveFirmaKeyStoreImpl extends KeyStoreSpi {
 			return;
 		}
 
-		final NameCallback nameCallback = new NameCallback(ClaveFirmaProviderMessages.getString("ClaveFirmaKeyStoreImpl.0")); //$NON-NLS-1$
+		final NameCallback nameCallback = new NameCallback(FireProviderMessages.getString("FireKeyStoreImpl.0")); //$NON-NLS-1$
 		this.callbackHandler.handle(new Callback[] { nameCallback });
 
 		this.subjectId = nameCallback.getName();
 
 		final List<X509Certificate> list = HttpCertificateList.getList(
-			ClaveFirmaProvider.getAppId(),
+			FireProvider.getAppId(),
 			this.subjectId
 		);
 		this.certsByAlias = new Hashtable<>(list.size());

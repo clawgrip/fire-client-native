@@ -36,7 +36,7 @@ import es.gob.fire.client.Base64;
  *  <li>SHA512withRSA</li>
  * </ul>
  * @author Tom&aacute;s Garc&iacute;a-Mer&aacute;s */
-public class ClaveFirmaSignatureImpl extends SignatureSpi {
+public class FireSignatureImpl extends SignatureSpi {
 
 	private static final String SIG_FORMAT_PKCS1 = "NONE"; //$NON-NLS-1$
 
@@ -44,12 +44,12 @@ public class ClaveFirmaSignatureImpl extends SignatureSpi {
 
 	private final ByteArrayOutputStream data = new ByteArrayOutputStream();
 
-	private ClaveFirmaPrivateKey privateKey = null;
+	private FirePrivateKey privateKey = null;
 
     private final String signatureAlgo;
     private final String signatureFormat;
 
-    ClaveFirmaSignatureImpl(final String signatureAlgorithm) {
+    FireSignatureImpl(final String signatureAlgorithm) {
         super();
         this.signatureAlgo = signatureAlgorithm;
         this.signatureFormat = SIG_FORMAT_PKCS1;
@@ -66,8 +66,8 @@ public class ClaveFirmaSignatureImpl extends SignatureSpi {
 
 		final String sessionId = UUID.randomUUID().toString();
 
-		final String retrieveServer = ClaveFirmaProvider.getRetrieveServerUrl();
-		final String storageServer = ClaveFirmaProvider.getStorageServerUrl();
+		final String retrieveServer = FireProvider.getRetrieveServerUrl();
+		final String storageServer = FireProvider.getStorageServerUrl();
 
 		final StringBuilder config = new StringBuilder();
 		config.append("redirectOkUrl=" + storageServer + "?op=put&v=PEDO&id=" + sessionId + "&dat=OK\r\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -94,7 +94,7 @@ public class ClaveFirmaSignatureImpl extends SignatureSpi {
 		}
 
 		final PasswordCallback pwc = new PasswordCallback(
-			ClaveFirmaProviderMessages.getString("ClaveFirmaSignatureImpl.0"), //$NON-NLS-1$
+			FireProviderMessages.getString("FireSignatureImpl.0"), //$NON-NLS-1$
 			false
 		);
 
@@ -110,7 +110,7 @@ public class ClaveFirmaSignatureImpl extends SignatureSpi {
 		final OtpManager otpManager;
 		try {
 			otpManager = (OtpManager) Class.forName(
-				ClaveFirmaProvider.getOtpManagerClassName()
+				FireProvider.getOtpManagerClassName()
 			).getConstructor().newInstance();
 		}
 		catch (
@@ -123,7 +123,7 @@ public class ClaveFirmaSignatureImpl extends SignatureSpi {
 			ClassNotFoundException e
 		) {
 			throw new IllegalStateException(
-				"El gestor de OTP configurado ('" + ClaveFirmaProvider.getOtpManagerClassName() + "' no puede cargarse: " + e //$NON-NLS-1$ //$NON-NLS-2$
+				"El gestor de OTP configurado ('" + FireProvider.getOtpManagerClassName() + "' no puede cargarse: " + e //$NON-NLS-1$ //$NON-NLS-2$
 			);
 		}
 
@@ -181,10 +181,10 @@ public class ClaveFirmaSignatureImpl extends SignatureSpi {
         if (prKey == null) {
             throw new InvalidKeyException("La clave proporcionada es nula"); //$NON-NLS-1$
         }
-        if (!(prKey instanceof ClaveFirmaPrivateKey)) {
+        if (!(prKey instanceof FirePrivateKey)) {
             throw new InvalidKeyException("La clave proporcionada no es de una tarjeta CERES: " + prKey.getClass().getName()); //$NON-NLS-1$
         }
-        this.privateKey = (ClaveFirmaPrivateKey) prKey;
+        this.privateKey = (FirePrivateKey) prKey;
         this.data.reset();
 	}
 
@@ -199,7 +199,7 @@ public class ClaveFirmaSignatureImpl extends SignatureSpi {
 	}
 
     /** Firma SHA1withRSA. */
-    public static final class Sha1 extends ClaveFirmaSignatureImpl {
+    public static final class Sha1 extends FireSignatureImpl {
         /** Constructor */
         public Sha1() {
             super("SHA1withRSA"); //$NON-NLS-1$
@@ -207,7 +207,7 @@ public class ClaveFirmaSignatureImpl extends SignatureSpi {
     }
 
     /** Firma SHA256withRSA. */
-    public static final class Sha256 extends ClaveFirmaSignatureImpl {
+    public static final class Sha256 extends FireSignatureImpl {
         /** Constructor */
         public Sha256() {
             super("SHA256withRSA"); //$NON-NLS-1$
@@ -215,7 +215,7 @@ public class ClaveFirmaSignatureImpl extends SignatureSpi {
     }
 
     /** Firma SHA384withRSA. */
-    public static final class Sha384 extends ClaveFirmaSignatureImpl {
+    public static final class Sha384 extends FireSignatureImpl {
         /** Constructor. */
         public Sha384() {
             super("SHA384withRSA"); //$NON-NLS-1$
@@ -223,7 +223,7 @@ public class ClaveFirmaSignatureImpl extends SignatureSpi {
     }
 
     /** Firma SHA512withRSA. */
-    public static final class Sha512 extends ClaveFirmaSignatureImpl {
+    public static final class Sha512 extends FireSignatureImpl {
         /** Constructor. */
         public Sha512() {
             super("SHA512withRSA"); //$NON-NLS-1$
@@ -231,10 +231,42 @@ public class ClaveFirmaSignatureImpl extends SignatureSpi {
     }
 
     /** Firma MD5andSHA1withRSA. */
-    public static final class MD5andSHA1 extends ClaveFirmaSignatureImpl {
+    public static final class MD5andSHA1 extends FireSignatureImpl {
     	/** Constructor. */
         public MD5andSHA1() {
             super("MD5andSHA1withRSA"); //$NON-NLS-1$
+        }
+    }
+
+    /** Firma SHA256withECDSA. */
+    public static final class Sha256Ecdsa extends FireSignatureImpl {
+    	/** Constructor. */
+        public Sha256Ecdsa() {
+            super("SHA256withECDSA"); //$NON-NLS-1$
+        }
+    }
+
+    /** Firma SHA384withECDSA. */
+    public static final class Sha384Ecdsa extends FireSignatureImpl {
+    	/** Constructor. */
+        public Sha384Ecdsa() {
+            super("SHA384withECDSA"); //$NON-NLS-1$
+        }
+    }
+
+    /** Firma SHA512withECDSA. */
+    public static final class Sha512Ecdsa extends FireSignatureImpl {
+    	/** Constructor. */
+        public Sha512Ecdsa() {
+            super("SHA512withECDSA"); //$NON-NLS-1$
+        }
+    }
+
+    /** Firma NONEwithECDSA. */
+    public static final class NoneEcdsa extends FireSignatureImpl {
+    	/** Constructor. */
+        public NoneEcdsa() {
+            super("NONEwithECDSA"); //$NON-NLS-1$
         }
     }
 

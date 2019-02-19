@@ -8,7 +8,7 @@ import javax.security.auth.callback.CallbackHandler;
 
 /** Clave privada de una entrada en ClaveFirma.
  * @author Tom&aacute;s Garc&iacute;a-Mer&aacute;s. */
-public final class ClaveFirmaPrivateKey implements RSAPrivateKey {
+public final class FirePrivateKey implements RSAPrivateKey {
 
 	private static final long serialVersionUID = 8103818384360324450L;
 
@@ -17,7 +17,7 @@ public final class ClaveFirmaPrivateKey implements RSAPrivateKey {
 	private final X509Certificate cert;
 	private final CallbackHandler ch;
 
-	ClaveFirmaPrivateKey(final String app,
+	FirePrivateKey(final String app,
 			             final String subject,
 			             final X509Certificate c,
 			             final CallbackHandler handler) {

@@ -45,7 +45,7 @@ public final class TestMisc {
 
 		final List<X509Certificate> certs = HttpCertificateList.getList(
 			"spt", //$NON-NLS-1$
-			"00001" //$NON-NLS-1$
+			"juaneliptico" //$NON-NLS-1$
 		);
 
 		System.out.println("Hemos encontrado " + (certs != null ? Integer.valueOf(certs.size()) : "0") + " certificados");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
@@ -63,10 +63,10 @@ public final class TestMisc {
 		try {
 			res = HttpLoadProcess.loadData(
 				"spt", //$NON-NLS-1$
-				"00001", //$NON-NLS-1$
+				"juaneliptico", //$NON-NLS-1$
 				"SIGN", //$NON-NLS-1$
 				"CAdES", //$NON-NLS-1$
-				"SHA512withRSA", //$NON-NLS-1$
+				"NONEwithECDSA", //$NON-NLS-1$
 				null, // ExtraParams
 				Base64.encode(certs.get(0).getEncoded()),
 				Base64.encode("DATOS A FIRMAR".getBytes()), //$NON-NLS-1$
@@ -82,7 +82,7 @@ public final class TestMisc {
 		System.out.println();
 		System.out.println(res);
 
-		// AQui para la ejecucion hasta que el usuario autoriza con el PIN que le llega por SMS en la URL de la Seguridad Social
+		// Aqui para la ejecucion hasta que el usuario autoriza con el PIN que le llega por SMS en la URL de la Seguridad Social
 
 		// El OTP ha validado y tenemos los datos cargados... Solo queda firmar
 		final byte[] sign;
@@ -92,7 +92,7 @@ public final class TestMisc {
 				res.getTransactionId(),
 				"SIGN", //$NON-NLS-1$
 				"CAdES", //$NON-NLS-1$
-				"SHA512withRSA", //$NON-NLS-1$
+				"NONEwithECDSA", //$NON-NLS-1$
 				null,
 				Base64.encode(certs.get(0).getEncoded(), true),
 				Base64.encode("DATOS A FIRMAR".getBytes(), true), //$NON-NLS-1$

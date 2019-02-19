@@ -2,9 +2,12 @@ package es.gob.clavefirma.client.jse.otp;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import es.gob.clavefirma.client.jse.OtpManager;
 import es.gob.clavefirma.client.jse.OtpManagerException;
@@ -26,7 +29,35 @@ public final class TestOtpManager implements OtpManager {
 	private static final String OK = "OK"; //$NON-NLS-1$
 	private static final String KO = "KO"; //$NON-NLS-1$
 
-	private static final String POST_URL = "http://demo.tgm:80/clavefirma-test-services/TestServiceAuthServlet"; //$NON-NLS-1$
+	private static final String POST_URL;
+	static {
+		final Properties p = new Properties();
+		try {
+			p.load(TestOtpManager.class.getResourceAsStream("/testotpmanager.properties")); //$NON-NLS-1$
+		}
+		catch (final IOException e) {
+			throw new RuntimeException(
+				"No se ha podido cargar la configuracion: " + e, e //$NON-NLS-1$
+			);
+		}
+		POST_URL = p.getProperty("postUrl"); //$NON-NLS-1$
+		if (POST_URL == null) {
+			throw new RuntimeException(
+				"La URL de configuracion del servicio es nula" //$NON-NLS-1$
+			);
+		}
+		try {
+			final URL url = new URL(POST_URL);
+			Logger.getLogger(TestOtpManager.class.getName()).info(
+				"URL de configuracion del servicio OTP de pruebas: " + url //$NON-NLS-1$
+			);
+		}
+		catch (final MalformedURLException e) {
+			throw new RuntimeException(
+				"La URL de configuracion del servicio es invalida: " + e, e //$NON-NLS-1$
+			);
+		}
+	}
 
 	private static final String DEFAULT_ENCODING = "UTF-8"; //$NON-NLS-1$
 

@@ -2,7 +2,6 @@ package test.es.gob.clavefirma.client.jse;
 
 import java.io.IOException;
 import java.security.KeyStore;
-import java.security.Provider;
 import java.security.Security;
 import java.util.Locale;
 
@@ -14,12 +13,14 @@ import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.TextInputCallback;
 import javax.security.auth.callback.TextOutputCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
+import javax.swing.JOptionPane;
 
 import es.gob.afirma.core.misc.http.UrlHttpManager;
 import es.gob.afirma.core.misc.http.UrlHttpManagerFactory;
 import es.gob.afirma.core.misc.http.UrlHttpManagerImpl;
 import es.gob.afirma.core.misc.http.UrlHttpMethod;
-import es.gob.clavefirma.client.jse.ClaveFirmaProvider;
+import es.gob.afirma.core.ui.AOUIFactory;
+import es.gob.clavefirma.client.jse.FireProvider;
 
 /** Pruebas del proveedor.
  * @author Tom&aacute;s Garc&iacute;a-Mer&aacute;s. */
@@ -32,13 +33,28 @@ public final class TestProviderAuth {
 		          final TextOutputCallback toc = (TextOutputCallback)callback;
 		          switch (((TextOutputCallback)callback).getMessageType()) {
 			          case TextOutputCallback.INFORMATION:
-			              //
+			        	  AOUIFactory.showMessageDialog(
+		        			  null,  // Padre
+		        			  ((TextOutputCallback)callback).getMessage(), // Mensaje
+		        			  "Informacion", //$NON-NLS-1$
+		        			  JOptionPane.INFORMATION_MESSAGE
+	        			  );
 			              break;
 			          case TextOutputCallback.ERROR:
-			              //
+			        	  AOUIFactory.showMessageDialog(
+		        			  null,  // Padre
+		        			  ((TextOutputCallback)callback).getMessage(), // Mensaje
+		        			  "Error", //$NON-NLS-1$
+		        			  JOptionPane.ERROR_MESSAGE
+	        			  );
 			              break;
 			          case TextOutputCallback.WARNING:
-			              //
+			        	  AOUIFactory.showMessageDialog(
+		        			  null,  // Padre
+		        			  ((TextOutputCallback)callback).getMessage(), // Mensaje
+		        			  "Advertencia", //$NON-NLS-1$
+		        			  JOptionPane.WARNING_MESSAGE
+	        			  );
 			              break;
 			          default:
 			              throw new IOException("Tipo de mensaje no soportado: " + toc.getMessageType()); //$NON-NLS-1$
@@ -47,14 +63,26 @@ public final class TestProviderAuth {
 		      else if (callback instanceof NameCallback) {
 		    	  // Le pedimos al usuario el nombre de usuario
 		    	  // Por ahora, siempre es el usuario 00001
-		    	  ((NameCallback)callback).setName("11830960J"); //$NON-NLS-1$
+		    	  ((NameCallback)callback).setName("00001"); //$NON-NLS-1$
 		      }
 		      else if (callback instanceof PasswordCallback) {
 		    	  // Le pedimos al usuario la contrasena
-		    	  ((PasswordCallback)callback).setPassword("rock2048".toCharArray()); //$NON-NLS-1$
+		    	  ((PasswordCallback)callback).setPassword("1111".toCharArray()); //$NON-NLS-1$
 		      }
 		      else if (callback instanceof TextInputCallback) {
 		    	  // Le pedimos al usuario el OTP
+		    	  final Object o = AOUIFactory.showInputDialog(
+	    			  null, // Padre
+	    			  "Por favor introduzca el codigo de un solo uso", //$NON-NLS-1$
+	    			  "Codigo de un solo uso", //$NON-NLS-1$
+	    			  JOptionPane.INFORMATION_MESSAGE,
+	    			  null, // Icono
+	    			  null, // Valores permitidos
+	    			  null  // Valor por defecto
+    			  );
+		    	  ((TextInputCallback)callback).setText(
+	    			  o != null ? o.toString() : "" //$NON-NLS-1$
+    			  );
 		      }
 		      else if (callback instanceof LanguageCallback) {
 		    	  // Obtenemos el Locale para los mensajes
@@ -82,10 +110,10 @@ public final class TestProviderAuth {
 	 * @param p Proveedor de ClaveFirma.
 	 * @return <code>KeyStore</code> cargado.
 	 * @throws Exception En cualquier error. */
-	public static KeyStore testKeyStore(final ClaveFirmaProvider p) throws Exception {
+	public static KeyStore testKeyStore(final FireProvider p) throws Exception {
 
 		final KeyStore.Builder builder = KeyStore.Builder.newInstance(
-			ClaveFirmaProvider.KEYSTORE_NAME,
+			FireProvider.KEYSTORE_NAME,
 			p,
 			CHP
 		);
@@ -97,10 +125,10 @@ public final class TestProviderAuth {
 	 * @throws Exception En cualquier error. */
 	public static void main(final String[] args) throws Exception {
 
-		final Provider p = new ClaveFirmaProvider();
+		final FireProvider p = new FireProvider();
 
-		final String retrieveServer = "http://demo.tgm/afirma-signature-retriever/RetrieveService"; //$NON-NLS-1$
-		final String storageServer = "http://demo.tgm/afirma-signature-storage/StorageService"; //$NON-NLS-1$
+		final String retrieveServer = "http://raq.uel:8080/afirma-signature-retriever/RetrieveService"; //$NON-NLS-1$
+		final String storageServer = "http://raq.uel:8080/afirma-signature-storage/StorageService"; //$NON-NLS-1$
 		final String config =
 			"retrieveServerUrl=" + retrieveServer + "\r\n" + //$NON-NLS-1$ //$NON-NLS-2$
 			"storageServerUrl=" + storageServer + "\r\n" +  //$NON-NLS-1$ //$NON-NLS-2$
@@ -108,7 +136,7 @@ public final class TestProviderAuth {
 			"otpManager=es.gob.clavefirma.client.jse.otp.TestOtpManager"; //$NON-NLS-1$
 		Security.insertProviderAt(p.configure(config), 1);
 
-		final KeyStore ks = testKeyStore((ClaveFirmaProvider) p);
+		final KeyStore ks = testKeyStore(p);
 
 //		final MessageDigest md = MessageDigest.getInstance("MD5andSHA1"); //$NON-NLS-1$
 //		System.out.println(md);

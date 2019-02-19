@@ -33,15 +33,15 @@ import es.gob.fire.client.Base64;
 
 /** Firmador PDF que delega el proceso en ClaveFirma.
  * @author Tom&aacute;s Garc&iacute;a-Mer&aacute;s. */
-public final class ClaveFirmaPdfSigner implements AOSigner {
+public final class FirePdfSigner implements AOSigner {
 
 	private static final AOSigner pdfSigner = new AOPDFSigner();
 
 	private static final String SIG_OP = "sign"; //$NON-NLS-1$
 
 	static {
-		if (Security.getProvider(ClaveFirmaProvider.NAME) != null) {
-			Security.addProvider(new ClaveFirmaProvider());
+		if (Security.getProvider(FireProvider.NAME) != null) {
+			Security.addProvider(new FireProvider());
 		}
 	}
 
@@ -57,7 +57,7 @@ public final class ClaveFirmaPdfSigner implements AOSigner {
 				"La clave privada no puede ser nula" //$NON-NLS-1$
 			);
 		}
-		if (!(privateKey instanceof ClaveFirmaPrivateKey)) {
+		if (!(privateKey instanceof FirePrivateKey)) {
 			throw new IllegalArgumentException(
 				"Tipo de clave privada no soportado: " + privateKey.getClass().getName() //$NON-NLS-1$
 			);
@@ -70,8 +70,8 @@ public final class ClaveFirmaPdfSigner implements AOSigner {
 
 		final String sessionId = UUID.randomUUID().toString();
 
-		final String retrieveServer = ClaveFirmaProvider.getRetrieveServerUrl();
-		final String storageServer = ClaveFirmaProvider.getStorageServerUrl();
+		final String retrieveServer = FireProvider.getRetrieveServerUrl();
+		final String storageServer = FireProvider.getStorageServerUrl();
 
 		final StringBuilder config = new StringBuilder();
 		config.append("redirectOkUrl=" + storageServer + "?op=put&v=PEDO&id=" + sessionId + "&dat=OK\r\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -80,8 +80,8 @@ public final class ClaveFirmaPdfSigner implements AOSigner {
 		final LoadResult res;
 		try {
 			res = HttpLoadProcess.loadData(
-				((ClaveFirmaPrivateKey)privateKey).getAppId(),
-				((ClaveFirmaPrivateKey)privateKey).getSubjectId(),
+				((FirePrivateKey)privateKey).getAppId(),
+				((FirePrivateKey)privateKey).getSubjectId(),
 				SignatureOperation.SIGN.toString(),
 				"PAdES", //$NON-NLS-1$
 				signatureAlgo,
@@ -99,12 +99,12 @@ public final class ClaveFirmaPdfSigner implements AOSigner {
 		}
 
 		final PasswordCallback pwc = new PasswordCallback(
-			ClaveFirmaProviderMessages.getString("ClaveFirmaPdfSigner.0"), //$NON-NLS-1$
+			FireProviderMessages.getString("FirePdfSigner.0"), //$NON-NLS-1$
 			false
 		);
 
 		try {
-			((ClaveFirmaPrivateKey)privateKey).getCallbackHandler().handle(new Callback[] { pwc });
+			((FirePrivateKey)privateKey).getCallbackHandler().handle(new Callback[] { pwc });
 		}
 		catch (IOException | UnsupportedCallbackException e2) {
 			throw new AOException(
@@ -115,7 +115,7 @@ public final class ClaveFirmaPdfSigner implements AOSigner {
 		final OtpManager otpManager;
 		try {
 			otpManager = (OtpManager) Class.forName(
-				ClaveFirmaProvider.getOtpManagerClassName()
+				FireProvider.getOtpManagerClassName()
 			).getConstructor().newInstance();
 		}
 		catch (
@@ -128,7 +128,7 @@ public final class ClaveFirmaPdfSigner implements AOSigner {
 			ClassNotFoundException e
 		) {
 			throw new IllegalStateException(
-				"El gestor de OTP configurado ('" + ClaveFirmaProvider.getOtpManagerClassName() + "' no puede cargarse: " + e //$NON-NLS-1$ //$NON-NLS-2$
+				"El gestor de OTP configurado ('" + FireProvider.getOtpManagerClassName() + "' no puede cargarse: " + e //$NON-NLS-1$ //$NON-NLS-2$
 			);
 		}
 
@@ -162,13 +162,13 @@ public final class ClaveFirmaPdfSigner implements AOSigner {
 		// El OTP ha validado y tenemos los datos cargados... Solo queda firmar
 		try {
 			return HttpSignProcess.sign(
-				((ClaveFirmaPrivateKey)privateKey).getAppId(),
+				((FirePrivateKey)privateKey).getAppId(),
 				res.getTransactionId(),
 				SIG_OP,
 				"PAdES", //$NON-NLS-1$
 				signatureAlgo,
 				AOUtil.properties2Base64(extraParams),
-				Base64.encode(((ClaveFirmaPrivateKey)privateKey).getCertificate().getEncoded(), true),
+				Base64.encode(((FirePrivateKey)privateKey).getCertificate().getEncoded(), true),
 				Base64.encode(data, true),
 				Base64.encode(res.getTriphaseData().toString().getBytes(), true), // Datos trifasicos en Base64,
 				null // Upgrade
