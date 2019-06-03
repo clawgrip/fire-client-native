@@ -28,13 +28,7 @@ import es.gob.clavefirma.client.signprocess.LoadResult;
 import es.gob.fire.client.Base64;
 
 /** Implementaci&oacute;n de firma basado en ClaveFirma.
- * Realiza firmas RSA con relleno PKCS#1 v1.5. Se soportan los siguientes algoritmos de firma:
- * <ul>
- *  <li>SHA1withRSA</li>
- *  <li>SHA256withRSA</li>
- *  <li>SHA384withRSA</li>
- *  <li>SHA512withRSA</li>
- * </ul>
+ * Realiza firmas RSA y ECDSA con relleno PKCS#1 v1.5.
  * @author Tom&aacute;s Garc&iacute;a-Mer&aacute;s */
 public class FireSignatureImpl extends SignatureSpi {
 
@@ -235,6 +229,14 @@ public class FireSignatureImpl extends SignatureSpi {
     	/** Constructor. */
         public MD5andSHA1() {
             super("MD5andSHA1withRSA"); //$NON-NLS-1$
+        }
+    }
+
+    /** Firma SHA256withECDSA. */
+    public static final class Sha1Ecdsa extends FireSignatureImpl {
+    	/** Constructor. */
+        public Sha1Ecdsa() {
+            super("SHA1withECDSA"); //$NON-NLS-1$
         }
     }
 

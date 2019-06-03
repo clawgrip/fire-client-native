@@ -23,6 +23,7 @@ public final class FireProvider extends Provider {
     private static final String SHA384WITH_RSA   = "SHA384withRSA"; //$NON-NLS-1$
     private static final String SHA256WITH_RSA   = "SHA256withRSA"; //$NON-NLS-1$
     private static final String SHA1WITH_RSA     = "SHA1withRSA"; //$NON-NLS-1$
+    private static final String SHA1WITH_ECDSA   = "SHA1withECDSA"; //$NON-NLS-1$
     private static final String SHA256WITH_ECDSA = "SHA256withECDSA"; //$NON-NLS-1$
     private static final String SHA384WITH_ECDSA = "SHA384withECDSA"; //$NON-NLS-1$
     private static final String SHA512WITH_ECDSA = "SHA512withECDSA"; //$NON-NLS-1$
@@ -47,6 +48,7 @@ public final class FireProvider extends Provider {
         put("Signature.SHA384withRSA",     "es.gob.clavefirma.client.jse.FireSignatureImpl$Sha384"); //$NON-NLS-1$ //$NON-NLS-2$
         put("Signature.SHA512withRSA",     "es.gob.clavefirma.client.jse.FireSignatureImpl$Sha512"); //$NON-NLS-1$ //$NON-NLS-2$
         put("Signature.MD5andSHA1withRSA", "es.gob.clavefirma.client.jse.FireSignatureImpl$MD5andSHA1"); //$NON-NLS-1$ //$NON-NLS-2$
+        put("Signature.SHA1withECDSA",     "es.gob.clavefirma.client.jse.FireSignatureImpl$Sha1Ecdsa"); //$NON-NLS-1$ //$NON-NLS-2$
         put("Signature.SHA256withECDSA",   "es.gob.clavefirma.client.jse.FireSignatureImpl$Sha256Ecdsa"); //$NON-NLS-1$ //$NON-NLS-2$
         put("Signature.SHA384withECDSA",   "es.gob.clavefirma.client.jse.FireSignatureImpl$Sha384Ecdsa"); //$NON-NLS-1$ //$NON-NLS-2$
         put("Signature.SHA512withECDSA",   "es.gob.clavefirma.client.jse.FireSignatureImpl$Sha512Ecdsa"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -58,6 +60,7 @@ public final class FireProvider extends Provider {
         put("Signature.SHA384withRSA SupportedKeyClasses",     FIRE_PRIVATE_KEY); //$NON-NLS-1$
         put("Signature.SHA512withRSA SupportedKeyClasses",     FIRE_PRIVATE_KEY); //$NON-NLS-1$
         put("Signature.MD5andSHA1withRSA SupportedKeyClasses", FIRE_PRIVATE_KEY); //$NON-NLS-1$
+        put("Signature.SHA1withECDSA SupportedKeyClasses",     FIRE_PRIVATE_KEY); //$NON-NLS-1$
         put("Signature.SHA256withECDSA SupportedKeyClasses",   FIRE_PRIVATE_KEY); //$NON-NLS-1$
         put("Signature.SHA384withECDSA SupportedKeyClasses",   FIRE_PRIVATE_KEY); //$NON-NLS-1$
         put("Signature.SHA512withECDSA SupportedKeyClasses",   FIRE_PRIVATE_KEY); //$NON-NLS-1$
@@ -89,6 +92,10 @@ public final class FireProvider extends Provider {
         put("Alg.Alias.Signature.SHA-512withRSA",             SHA512WITH_RSA); //$NON-NLS-1$
         put("Alg.Alias.Signature.SHA-512withRSAEncryption",   SHA512WITH_RSA); //$NON-NLS-1$
         put("Alg.Alias.Signature.SHA512withRSAEncryption",    SHA512WITH_RSA); //$NON-NLS-1$
+
+        put("Alg.Alias.Signature.ECDSA",                      SHA1WITH_ECDSA); //$NON-NLS-1$
+        put("Alg.Alias.Signature.SHA-1withECDSA",             SHA1WITH_ECDSA); //$NON-NLS-1$
+        put("Alg.Alias.Signature.SHAwithECDSA",               SHA1WITH_ECDSA); //$NON-NLS-1$
 
         put("Alg.Alias.Signature.1.2.840.10045.4.3.2",        SHA256WITH_ECDSA); //$NON-NLS-1$
         put("Alg.Alias.Signature.OID.1.2.840.10045.4.3.2",    SHA256WITH_ECDSA); //$NON-NLS-1$
