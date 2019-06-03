@@ -1,14 +1,13 @@
 package es.gob.clavefirma.client.jse;
 
-import java.math.BigInteger;
+import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
-import java.security.interfaces.RSAPrivateKey;
 
 import javax.security.auth.callback.CallbackHandler;
 
 /** Clave privada de una entrada en ClaveFirma.
  * @author Tom&aacute;s Garc&iacute;a-Mer&aacute;s. */
-public final class FirePrivateKey implements RSAPrivateKey {
+public final class FirePrivateKey implements PrivateKey {
 
 	private static final long serialVersionUID = 8103818384360324450L;
 
@@ -61,16 +60,6 @@ public final class FirePrivateKey implements RSAPrivateKey {
 	@Override
 	public String getFormat() {
 		return null;
-	}
-
-	@Override
-	public BigInteger getModulus() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public BigInteger getPrivateExponent() {
-		throw new UnsupportedOperationException();
 	}
 
 }
