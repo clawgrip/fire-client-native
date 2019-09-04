@@ -224,6 +224,14 @@ public class FireSignatureImpl extends SignatureSpi {
         }
     }
 
+    /** Firma NONEwithRSA. */
+    public static final class None extends FireSignatureImpl {
+    	/** Constructor. */
+        public None() {
+            super("NONEwithRSA"); //$NON-NLS-1$
+        }
+    }
+
     /** Firma MD5andSHA1withRSA. */
     public static final class MD5andSHA1 extends FireSignatureImpl {
     	/** Constructor. */

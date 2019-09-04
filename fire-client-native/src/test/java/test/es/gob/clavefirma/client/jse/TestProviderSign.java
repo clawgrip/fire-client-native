@@ -134,7 +134,7 @@ public final class TestProviderSign {
 
 		final byte[] pdf = p1Signer.sign(
 			data,
-			"NONEwithECDSA", //$NON-NLS-1$
+			"NONEwithRSA", //$NON-NLS-1$
 			pke.getPrivateKey(),
 			pke.getCertificateChain(),
 			null // ExtraParams

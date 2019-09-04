@@ -13,6 +13,7 @@ import es.gob.clavefirma.client.jse.OtpManager;
 import es.gob.clavefirma.client.jse.OtpManagerException;
 import es.gob.fire.client.HttpsConnection;
 import es.gob.fire.client.HttpsConnection.Method;
+import es.gob.fire.client.NetConnection;
 
 /** <code>Callback</code> de pruebas para gesti&oacute;n del OTP.
  * @author Tom&aacute;s Garc&iacute;a-Mer&aacute;s. */
@@ -57,6 +58,9 @@ public final class TestOtpManager implements OtpManager {
 				"La URL de configuracion del servicio es invalida: " + e, e //$NON-NLS-1$
 			);
 		}
+		Logger.getLogger(TestOtpManager.class.getName()).info(
+			"Se usará el siguiente servicio OTP de pruebas: " + POST_URL //$NON-NLS-1$
+		);
 	}
 
 	private static final String DEFAULT_ENCODING = "UTF-8"; //$NON-NLS-1$
@@ -74,7 +78,7 @@ public final class TestOtpManager implements OtpManager {
 			              final Properties cfg) throws OtpManagerException {
 
 		final byte[] redirResponse;
-		final HttpsConnection conn;
+		final NetConnection conn;
 		try {
 			conn = HttpsConnection.getConnection(new Properties(), null);
 			redirResponse = conn.readUrl(redirectUrl, null, HttpsConnection.Method.GET);

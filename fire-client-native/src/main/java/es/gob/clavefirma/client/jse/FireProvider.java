@@ -47,6 +47,7 @@ public final class FireProvider extends Provider {
         put("Signature.SHA256withRSA",     "es.gob.clavefirma.client.jse.FireSignatureImpl$Sha256"); //$NON-NLS-1$ //$NON-NLS-2$
         put("Signature.SHA384withRSA",     "es.gob.clavefirma.client.jse.FireSignatureImpl$Sha384"); //$NON-NLS-1$ //$NON-NLS-2$
         put("Signature.SHA512withRSA",     "es.gob.clavefirma.client.jse.FireSignatureImpl$Sha512"); //$NON-NLS-1$ //$NON-NLS-2$
+        put("Signature.NONEwithRSA",       "es.gob.clavefirma.client.jse.FireSignatureImpl$None"); //$NON-NLS-1$ //$NON-NLS-2$
         put("Signature.MD5andSHA1withRSA", "es.gob.clavefirma.client.jse.FireSignatureImpl$MD5andSHA1"); //$NON-NLS-1$ //$NON-NLS-2$
         put("Signature.SHA1withECDSA",     "es.gob.clavefirma.client.jse.FireSignatureImpl$Sha1Ecdsa"); //$NON-NLS-1$ //$NON-NLS-2$
         put("Signature.SHA256withECDSA",   "es.gob.clavefirma.client.jse.FireSignatureImpl$Sha256Ecdsa"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -59,6 +60,7 @@ public final class FireProvider extends Provider {
         put("Signature.SHA256withRSA SupportedKeyClasses",     FIRE_PRIVATE_KEY); //$NON-NLS-1$
         put("Signature.SHA384withRSA SupportedKeyClasses",     FIRE_PRIVATE_KEY); //$NON-NLS-1$
         put("Signature.SHA512withRSA SupportedKeyClasses",     FIRE_PRIVATE_KEY); //$NON-NLS-1$
+        put("Signature.NONEwithRSA SupportedKeyClasses",       FIRE_PRIVATE_KEY); //$NON-NLS-1$
         put("Signature.MD5andSHA1withRSA SupportedKeyClasses", FIRE_PRIVATE_KEY); //$NON-NLS-1$
         put("Signature.SHA1withECDSA SupportedKeyClasses",     FIRE_PRIVATE_KEY); //$NON-NLS-1$
         put("Signature.SHA256withECDSA SupportedKeyClasses",   FIRE_PRIVATE_KEY); //$NON-NLS-1$
