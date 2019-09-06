@@ -127,8 +127,8 @@ public final class TestProviderAuth {
 
 		final FireProvider p = new FireProvider();
 
-		final String retrieveServer = "http://demo.tgm:8080/afirma-signature-retriever/RetrieveService"; //$NON-NLS-1$
-		final String storageServer = "http://demo.tgm:8080/afirma-signature-storage/StorageService"; //$NON-NLS-1$
+		final String retrieveServer = "http://demo.tgm/afirma-signature-retriever/RetrieveService"; //$NON-NLS-1$
+		final String storageServer = "http://demo.tgm/afirma-signature-storage/StorageService"; //$NON-NLS-1$
 		final String config =
 			"retrieveServerUrl=" + retrieveServer + "\r\n" + //$NON-NLS-1$ //$NON-NLS-2$
 			"storageServerUrl=" + storageServer + "\r\n" +  //$NON-NLS-1$ //$NON-NLS-2$
