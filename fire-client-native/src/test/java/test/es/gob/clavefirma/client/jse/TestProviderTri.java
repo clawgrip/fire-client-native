@@ -132,7 +132,7 @@ public final class TestProviderTri {
 
 		final byte[] xml = signer.sign(
 			data,
-			"SHA512withRSA", //$NON-NLS-1$
+			"SHA512withECDSA", //$NON-NLS-1$
 			pke.getPrivateKey(),
 			pke.getCertificateChain(),
 			config // ExtraParams
