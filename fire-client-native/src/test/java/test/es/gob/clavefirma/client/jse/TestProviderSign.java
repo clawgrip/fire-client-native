@@ -110,8 +110,8 @@ public final class TestProviderSign {
 
 		final FireProvider p = new FireProvider();
 
-		final String retrieveServer = "http://demo.tgm/afirma-signature-retriever/RetrieveService"; //$NON-NLS-1$
-		final String storageServer = "http://demo.tgm/afirma-signature-storage/StorageService"; //$NON-NLS-1$
+		final String retrieveServer = "http://demo.tgm:8080/afirma-signature-retriever/RetrieveService"; //$NON-NLS-1$
+		final String storageServer = "http://demo.tgm:8080/afirma-signature-storage/StorageService"; //$NON-NLS-1$
 		final String config =
 			"retrieveServerUrl=" + retrieveServer + "\r\n" + //$NON-NLS-1$ //$NON-NLS-2$
 			"storageServerUrl=" + storageServer + "\r\n" +  //$NON-NLS-1$ //$NON-NLS-2$
@@ -128,7 +128,7 @@ public final class TestProviderSign {
 
 		final byte[] data = "1234567812345678123456781234567812345678123456781234567812345678".getBytes(); //$NON-NLS-1$
 
-//		final byte[] data = Utils.getDataFromInputStream(
+//		final byte[] data = es.gob.fire.client.Utils.getDataFromInputStream(
 //			TestProviderSign.class.getResourceAsStream("/TEST_PDF.pdf") //$NON-NLS-1$
 //		);
 
@@ -141,7 +141,7 @@ public final class TestProviderSign {
 		);
 
 		try (
-			final OutputStream fos = new FileOutputStream(File.createTempFile("CLAVE_", ".pdf")); //$NON-NLS-1$ //$NON-NLS-2$
+			final OutputStream fos = new FileOutputStream(File.createTempFile("CLAVE_", ".bin")); //$NON-NLS-1$ //$NON-NLS-2$
 		) {
 			fos.write(pdf);
 			fos.close();

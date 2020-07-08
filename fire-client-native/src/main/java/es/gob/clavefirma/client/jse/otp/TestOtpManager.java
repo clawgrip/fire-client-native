@@ -1,6 +1,7 @@
 package es.gob.clavefirma.client.jse.otp;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,8 +34,10 @@ public final class TestOtpManager implements OtpManager {
 	private static final String POST_URL;
 	static {
 		final Properties p = new Properties();
-		try {
-			p.load(TestOtpManager.class.getResourceAsStream("/testotpmanager.properties")); //$NON-NLS-1$
+		try (
+			final InputStream is = TestOtpManager.class.getResourceAsStream("/testotpmanager.properties") //$NON-NLS-1$
+		) {
+			p.load(is);
 		}
 		catch (final IOException e) {
 			throw new RuntimeException(
@@ -59,7 +62,7 @@ public final class TestOtpManager implements OtpManager {
 			);
 		}
 		Logger.getLogger(TestOtpManager.class.getName()).info(
-			"Se usará el siguiente servicio OTP de pruebas: " + POST_URL //$NON-NLS-1$
+			"Se usara el siguiente servicio OTP de pruebas: " + POST_URL //$NON-NLS-1$
 		);
 	}
 

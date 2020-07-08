@@ -3,6 +3,7 @@ package test.es.gob.clavefirma.client.jse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.KeyStore;
 import java.security.KeyStore.PrivateKeyEntry;
@@ -111,8 +112,8 @@ public final class TestProviderAOSigner {
 
 		final FireProvider p = new FireProvider();
 
-		final String retrieveServer = "http://demo.tgm/afirma-signature-retriever/RetrieveService"; //$NON-NLS-1$
-		final String storageServer = "http://demo.tgm/afirma-signature-storage/StorageService"; //$NON-NLS-1$
+		final String retrieveServer = "http://demo.tgm:8080/afirma-signature-retriever/RetrieveService"; //$NON-NLS-1$
+		final String storageServer = "http://demo.tgm:8080/afirma-signature-storage/StorageService"; //$NON-NLS-1$
 		final String config =
 			"retrieveServerUrl=" + retrieveServer + "\r\n" + //$NON-NLS-1$ //$NON-NLS-2$
 			"storageServerUrl=" + storageServer + "\r\n" +  //$NON-NLS-1$ //$NON-NLS-2$
@@ -126,13 +127,16 @@ public final class TestProviderAOSigner {
 		final String alias = ks.aliases().nextElement();
 		final PrivateKeyEntry pke = (PrivateKeyEntry) ks.getEntry(alias, null);
 
-		final byte[] data = Utils.getDataFromInputStream(
-			TestProviderAOSigner.class.getResourceAsStream("/TEST_PDF.pdf") //$NON-NLS-1$
-		);
+		final byte[] data;
+		try (final InputStream is = TestProviderAOSigner.class.getResourceAsStream("/TEST_PDF.pdf")) { //$NON-NLS-1$
+			data = Utils.getDataFromInputStream(
+				is
+			);
+		}
 
 		final byte[] pdf = pdfSigner.sign(
 			data,
-			"SHA512withRSA", //$NON-NLS-1$
+			pke.getPrivateKey().getAlgorithm().startsWith("EC") ? "SHA512withECDSA" : "SHA512withRSA", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			pke.getPrivateKey(),
 			pke.getCertificateChain(),
 			null // ExtraParams

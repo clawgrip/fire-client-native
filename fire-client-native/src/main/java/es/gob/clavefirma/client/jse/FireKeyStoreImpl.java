@@ -204,7 +204,10 @@ public final class FireKeyStoreImpl extends KeyStoreSpi {
 			alias,
 			null
 		);
-    	return new PrivateKeyEntry(key, engineGetCertificateChain(alias));
+    	return new PrivateKeyEntry(
+			key,
+			engineGetCertificateChain(alias)
+		);
 	}
 
 	//***********************************************************************

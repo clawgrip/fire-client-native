@@ -29,7 +29,7 @@ import es.gob.clavefirma.client.jse.FireProvider;
  * @author Tom&aacute;s Garc&iacute;a-Mer&aacute;s. */
 public final class TestProviderTri {
 
-	private static final String SERVER_URL = "http://demo.tgm/fire-signature/signatureService"; //$NON-NLS-1$
+	private static final String SERVER_URL = "http://demo.tgm:8080/fire-signature/signatureService"; //$NON-NLS-1$
 
 	private static final KeyStore.CallbackHandlerProtection CHP = new KeyStore.CallbackHandlerProtection(
 		callbacks -> {
@@ -108,8 +108,8 @@ public final class TestProviderTri {
 
 		final FireProvider p = new FireProvider();
 
-		final String retrieveServer = "http://demo.tgm/afirma-signature-retriever/RetrieveService"; //$NON-NLS-1$
-		final String storageServer = "http://demo.tgm/afirma-signature-storage/StorageService"; //$NON-NLS-1$
+		final String retrieveServer = "http://demo.tgm:8080/afirma-signature-retriever/RetrieveService"; //$NON-NLS-1$
+		final String storageServer = "http://demo.tgm:8080/afirma-signature-storage/StorageService"; //$NON-NLS-1$
 		final String configFireP =
 			"retrieveServerUrl=" + retrieveServer + "\r\n" + //$NON-NLS-1$ //$NON-NLS-2$
 			"storageServerUrl=" + storageServer + "\r\n" +  //$NON-NLS-1$ //$NON-NLS-2$
